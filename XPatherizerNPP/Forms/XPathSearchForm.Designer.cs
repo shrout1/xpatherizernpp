@@ -1,4 +1,4 @@
-﻿namespace XPatherizerNPP
+﻿namespace Kbg.NppPluginNET
 {
     partial class XPathSearchForm
     {

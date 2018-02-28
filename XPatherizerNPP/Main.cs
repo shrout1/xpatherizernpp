@@ -13,9 +13,10 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.XPath;
-using NppPluginNET;
+//using NppPluginNET;
+using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public class Main
     {
@@ -38,12 +39,18 @@ namespace XPatherizerNPP
         #endregion
 
         #region " StartUp/CleanUp "
+
+        public static void OnNotification(ScNotification notification)
+        {
+            //Borrowed from GUIDHelper
+            //selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
+        }
         internal static void CommandMenuInit()
         {
             //Debug
             //System.Diagnostics.Debugger.Launch();
             StringBuilder sbFilePath = new StringBuilder(Win32.MAX_PATH);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETPLUGINSCONFIGDIR, Win32.MAX_PATH, sbFilePath);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETPLUGINSCONFIGDIR, Win32.MAX_PATH, sbFilePath);
             settingsFilePath = sbFilePath.ToString() + "\\XPatherizer";
             if (!Directory.Exists(settingsFilePath)) Directory.CreateDirectory(settingsFilePath);
             tmpFilePath = settingsFilePath + "\\Temp.tmp";
@@ -62,6 +69,10 @@ namespace XPatherizerNPP
             }
         }
 
+        internal static void SetToolBarIcon()
+        {
+        }
+
         internal static void PluginCleanUp()
         {
             //Win32.WritePrivateProfileString("SomeSection", "SomeKey", someSetting ? "1" : "0", iniFilePath);
@@ -77,7 +88,7 @@ namespace XPatherizerNPP
             IntPtr curScintilla;
             ArrayList Files = new ArrayList();
             StringBuilder CurrentFile = new StringBuilder(Win32.MAX_PATH);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETFULLCURRENTPATH, 0, CurrentFile);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETFULLCURRENTPATH, 0, CurrentFile);
             XMLFileSelect frmFilesForm = new XMLFileSelect();
 
             for (int window = 0; window < 2; window++)
@@ -86,14 +97,14 @@ namespace XPatherizerNPP
                 while (currentdoc == newdoc)
                 {
                     newdoc++;
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_ACTIVATEDOC, window, newdoc);
-                    currentdoc = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETCURRENTDOCINDEX, 0, window);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_ACTIVATEDOC, window, newdoc);
+                    currentdoc = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETCURRENTDOCINDEX, 0, window);
 
                     if (currentdoc == newdoc)
                     {
                         curScintilla = PluginBase.GetCurrentScintilla();
                         StringBuilder path = new StringBuilder(Win32.MAX_PATH);
-                        Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETFULLCURRENTPATH, 0, path);
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETFULLCURRENTPATH, 0, path);
 
                         bool bitNew = !Files.Contains(path);
 
@@ -106,7 +117,7 @@ namespace XPatherizerNPP
                 }
             }
 
-            Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_SWITCHTOFILE, 0, CurrentFile.ToString());
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_SWITCHTOFILE, 0, CurrentFile.ToString());
             int i = frmFilesForm.GetResult();
 
             if (i > -1)
@@ -128,7 +139,7 @@ namespace XPatherizerNPP
                 sb.Insert(j, "<?xml-stylesheet href=\"xslt.xslt\" type=\"text/xsl\"?>");
                 File.WriteAllText(tmpFilesPath + "xml.xml", sb.ToString());
 
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_SWITCHTOFILE, 0, Files[i].ToString());
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_SWITCHTOFILE, 0, Files[i].ToString());
 
                 curScintilla = PluginBase.GetCurrentScintilla();
                 length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
@@ -141,7 +152,7 @@ namespace XPatherizerNPP
 
                 System.Diagnostics.Process.Start(tmpFilesPath + "html.html");
 
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_SWITCHTOFILE, 0, CurrentFile.ToString());
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_SWITCHTOFILE, 0, CurrentFile.ToString());
             }
         }
 
@@ -160,7 +171,7 @@ namespace XPatherizerNPP
             int index = 0;
 
             StringBuilder CurrentFile = new StringBuilder(Win32.MAX_PATH);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETFULLCURRENTPATH, 0, CurrentFile);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETFULLCURRENTPATH, 0, CurrentFile);
 
             if (!settings.NewFile)
             {
@@ -174,14 +185,14 @@ namespace XPatherizerNPP
                 while (currentdoc == newdoc)
                 {
                     newdoc++;
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_ACTIVATEDOC, window, newdoc);
-                    currentdoc = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETCURRENTDOCINDEX, 0, window);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_ACTIVATEDOC, window, newdoc);
+                    currentdoc = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETCURRENTDOCINDEX, 0, window);
 
                     if (currentdoc == newdoc)
                     {
                         curScintilla = PluginBase.GetCurrentScintilla();
                         StringBuilder path = new StringBuilder(Win32.MAX_PATH);
-                        Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETFULLCURRENTPATH, 0, path);
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETFULLCURRENTPATH, 0, path);
 
                         bool Verify = !FilePaths.Contains(path);
 
@@ -225,14 +236,14 @@ namespace XPatherizerNPP
 
             if (settings.NewFile)
             {
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_FILE_NEW);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_FILE_NEW);
                 curScintilla = PluginBase.GetCurrentScintilla();
                 Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, outPut);
             }
             else
             {
                 ShowXPatherizer(false, true);
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_SWITCHTOFILE, 0, CurrentFile.ToString());
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_SWITCHTOFILE, 0, CurrentFile.ToString());
                 frmXPathResults.resultsTree.ExpandAll();
             }
 
@@ -322,7 +333,7 @@ namespace XPatherizerNPP
                 Win32.SendMessage(curScintilla, SciMsg.SCI_SETSELECTIONEND, length, 0);
                 Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, sb.Replace("&amp;", "&"));
                 Win32.SendMessage(curScintilla, SciMsg.SCI_GOTOPOS, 0, 0);
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
             }
             catch (XmlException xex)
             {
@@ -406,11 +417,11 @@ namespace XPatherizerNPP
                     IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
                     Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
 
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
                     frmXPathSearch.HasBeenShown = true;
                 }
                 else
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_DMMSHOW, 0, frmXPathSearch.Handle);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMSHOW, 0, frmXPathSearch.Handle);
             }
 
             if (ShowResults)
@@ -427,11 +438,11 @@ namespace XPatherizerNPP
                     IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
                     Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
 
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
                     frmXPathResults.HasBeenShown = true;
                 }
                 else
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_DMMSHOW, 0, frmXPathResults.Handle);
+                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMSHOW, 0, frmXPathResults.Handle);
             }
 
             if (ShowSearch)
@@ -457,7 +468,7 @@ namespace XPatherizerNPP
                     string strXPath = br.ReadString();
                     if (File.Exists(openFileDialog1.FileName + ".xml"))
                     {
-                        Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_DOOPEN, 0, openFileDialog1.FileName + ".xml");
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DOOPEN, 0, openFileDialog1.FileName + ".xml");
                         IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                         int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                         StringBuilder sb = new StringBuilder(length);
@@ -474,10 +485,10 @@ namespace XPatherizerNPP
                     }
                     else
                     {
-                        Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_FILE_NEW);
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_FILE_NEW);
                         IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                         Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, br.ReadString());
-                        Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_SAVECURRENTFILEAS, 0, openFileDialog1.FileName + ".xml");
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_SAVECURRENTFILEAS, 0, openFileDialog1.FileName + ".xml");
                     }
                     frmXPathSearch.txtXPath.Text = strXPath;
                     br.Close();
@@ -848,9 +859,9 @@ namespace XPatherizerNPP
                 string filename = xPath.Split('|')[0];
                 int startPos = int.Parse(xPath.Split('|')[1]);
 
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_SWITCHTOFILE, 0, filename);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_SWITCHTOFILE, 0, filename);
                 StringBuilder CurrentFile = new StringBuilder(Win32.MAX_PATH);
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETFULLCURRENTPATH, 0, CurrentFile);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETFULLCURRENTPATH, 0, CurrentFile);
 
                 if (CurrentFile.ToString() == filename)
                 {
@@ -952,8 +963,8 @@ namespace XPatherizerNPP
         /// <param name="code">The parameter sent from NPP.</param>
         public static void Notifications(IntPtr code)
         {
-            SCNotification nc = (SCNotification)Marshal.PtrToStructure(code, typeof(SCNotification));
-            if (nc.nmhdr.code == (uint)NppMsg.NPPN_READY)
+            ScNotification nc = (ScNotification)Marshal.PtrToStructure(code, typeof(ScNotification));
+            if (nc.Header.Code == (uint)NppMsg.NPPN_READY)
             {
                 //NPP is done loading.
 
@@ -964,15 +975,15 @@ namespace XPatherizerNPP
                 if (settings.AutoLoad)
                     ShowXPatherizer();
 
-                int nbFile = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETNBOPENFILES, 0, 0);
+                int nbFile = (int)Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETNBOPENFILES, 0, 0);
                 ClikeStringArray cStrArray = new ClikeStringArray(nbFile, Win32.MAX_PATH);
-                if (Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETOPENFILENAMES, cStrArray.NativePointer, nbFile) != IntPtr.Zero)
+                if (Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETOPENFILENAMES, cStrArray.NativePointer, nbFile) != IntPtr.Zero)
                     tempData.Verify(new ArrayList(cStrArray.ManagedStringsUnicode));
 
                 //Load the stored XPath for the current file.
                 LoadXPath();
             }
-            else if (nc.nmhdr.code == (uint)NppMsg.NPPN_BUFFERACTIVATED)
+            else if (nc.Header.Code == (uint)NppMsg.NPPN_BUFFERACTIVATED)
             {
                 if (tempData != null)
                 {
@@ -982,7 +993,7 @@ namespace XPatherizerNPP
                     LoadXPath();
                 }
             }
-            else if (nc.nmhdr.code == (uint)NppMsg.NPPN_FILEOPENED)
+            else if (nc.Header.Code == (uint)NppMsg.NPPN_FILEOPENED)
             {
                 if (tempData != null)
                 {
@@ -992,7 +1003,7 @@ namespace XPatherizerNPP
                     LoadXPath();
                 }
             }
-            else if (nc.nmhdr.code == (uint)NppMsg.NPPN_FILECLOSED)
+            else if (nc.Header.Code == (uint)NppMsg.NPPN_FILECLOSED)
             {
                 if (tempData != null)
                 {
@@ -1019,7 +1030,7 @@ namespace XPatherizerNPP
         {
             IntPtr curScintilla = PluginBase.GetCurrentScintilla();
             StringBuilder path = new StringBuilder(Win32.MAX_PATH);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETFULLCURRENTPATH, 0, path);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETFULLCURRENTPATH, 0, path);
 
             frmXPathSearch.txtXPath.Text = tempData.Load(path.ToString());
         }
@@ -1083,10 +1094,10 @@ namespace XPatherizerNPP
             if (toExport != "<root>")
             {
                 toExport += "</root>";
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_FILE_NEW);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_FILE_NEW);
                 curScintilla = PluginBase.GetCurrentScintilla();
                 Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, toExport);
-                Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
+                Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
                 Beautify(false);
             }
         }
@@ -1140,7 +1151,7 @@ namespace XPatherizerNPP
             Win32.SendMessage(curScintilla, SciMsg.SCI_SETSELECTIONEND, length, 0);
             Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, XMLdoc.OuterXml.Replace("&amp;", "&"));
             Win32.SendMessage(curScintilla, SciMsg.SCI_GOTOPOS, 0, 0);
-            Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
+            Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
             Beautify(false);
         }
 

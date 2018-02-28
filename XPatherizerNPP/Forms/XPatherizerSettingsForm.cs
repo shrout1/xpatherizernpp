@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Windows.Forms;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public partial class XPatherizerSettingsForm : Form
     {

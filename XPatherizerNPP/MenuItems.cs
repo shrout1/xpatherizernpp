@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-using NppPluginNET;
+//using NppPluginNET;
+using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public class MenuItems
     {

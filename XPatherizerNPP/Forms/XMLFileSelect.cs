@@ -5,8 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public partial class XMLFileSelect : Form
     {

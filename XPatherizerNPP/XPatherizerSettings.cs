@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public class XPatherizerSettings
     {

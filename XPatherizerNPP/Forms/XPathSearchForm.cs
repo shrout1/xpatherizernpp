@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using NppPluginNET;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public partial class XPathSearchForm : Form
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace XPatherizerNPP.Properties {
+namespace Kbg.NppPluginNET.Properties {
     using System;
     
     

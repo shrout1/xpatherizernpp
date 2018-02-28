@@ -9,9 +9,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.XPath;
-using NppPluginNET;
+//using NppPluginNET;
+using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     public partial class XPathResultsForm : Form
     {

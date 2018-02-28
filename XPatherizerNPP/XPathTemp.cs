@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-namespace XPatherizerNPP
+namespace Kbg.NppPluginNET
 {
     class XPathTemp
     {
