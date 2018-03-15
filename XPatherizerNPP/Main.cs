@@ -405,45 +405,52 @@ namespace Kbg.NppPluginNET
         {
             if (ShowSearch)
             {
-                if (!frmXPathSearch.HasBeenShown)
-                {
-                    NppTbData _nppTbData = new NppTbData();
-                    _nppTbData.hClient = frmXPathSearch.Handle;
-                    _nppTbData.pszName = "XPath Search";
-                    _nppTbData.dlgID = idSearchDlg;
-                    _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_TOP | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;
-                    _nppTbData.hIconTab = (uint)Icon.FromHandle(Properties.Resources.XPNPPIcon16.GetHicon()).Handle;
-                    _nppTbData.pszModuleName = PluginName;
-                    IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
-                    Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
+                
+                //Appears that forms were being initialized in a different way for older versions of NPP
+                InitializeForms();
+                // {
+                    if (!frmXPathSearch.HasBeenShown)
+                    {
+                        NppTbData _nppTbData = new NppTbData();
+                        _nppTbData.hClient = frmXPathSearch.Handle;
+                        _nppTbData.pszName = "XPath Search";
+                        _nppTbData.dlgID = idSearchDlg;
+                        _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_TOP | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;
+                        _nppTbData.hIconTab = (uint)Icon.FromHandle(Properties.Resources.XPNPPIcon16.GetHicon()).Handle;
+                        _nppTbData.pszModuleName = PluginName;
+                        IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
+                        Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
 
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
-                    frmXPathSearch.HasBeenShown = true;
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+                        frmXPathSearch.HasBeenShown = true;
+                    }
+                    else
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, frmXPathSearch.Handle);
                 }
-                else
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMSHOW, 0, frmXPathSearch.Handle);
-            }
 
             if (ShowResults)
             {
-                if (!frmXPathResults.HasBeenShown)
-                {
-                    NppTbData _nppTbData = new NppTbData();
-                    _nppTbData.hClient = frmXPathResults.Handle;
-                    _nppTbData.pszName = "XPath Results";
-                    _nppTbData.dlgID = idResultsDlg;
-                    _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;
-                    _nppTbData.hIconTab = (uint)Icon.FromHandle(Properties.Resources.XPNPPIcon216.GetHicon()).Handle;
-                    _nppTbData.pszModuleName = PluginName;
-                    IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
-                    Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
+               // if (!(frmXPathSearch == null))
+               // {
+                    if (!frmXPathResults.HasBeenShown)
+                    {
+                        NppTbData _nppTbData = new NppTbData();
+                        _nppTbData.hClient = frmXPathResults.Handle;
+                        _nppTbData.pszName = "XPath Results";
+                        _nppTbData.dlgID = idResultsDlg;
+                        _nppTbData.uMask = NppTbMsg.DWS_DF_CONT_RIGHT | NppTbMsg.DWS_ICONTAB | NppTbMsg.DWS_ICONBAR;
+                        _nppTbData.hIconTab = (uint)Icon.FromHandle(Properties.Resources.XPNPPIcon216.GetHicon()).Handle;
+                        _nppTbData.pszModuleName = PluginName;
+                        IntPtr _ptrNppTbData = Marshal.AllocHGlobal(Marshal.SizeOf(_nppTbData));
+                        Marshal.StructureToPtr(_nppTbData, _ptrNppTbData, false);
 
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
-                    frmXPathResults.HasBeenShown = true;
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMREGASDCKDLG, 0, _ptrNppTbData);
+                        frmXPathResults.HasBeenShown = true;
+                    }
+                    else
+                        Win32.SendMessage(PluginBase.nppData._nppHandle, (uint)NppMsg.NPPM_DMMSHOW, 0, frmXPathResults.Handle);
+                //}
                 }
-                else
-                    Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_DMMSHOW, 0, frmXPathResults.Handle);
-            }
 
             if (ShowSearch)
                 LoadXPath();
@@ -968,8 +975,9 @@ namespace Kbg.NppPluginNET
             {
                 //NPP is done loading.
 
+                //COMMENTED OUT FOR DEBUG - not sure how this is being invoked anymore.
                 //Create the XPatherizer windows and load the data file.
-                InitializeForms();
+                //InitializeForms();
 
                 //Show the XPatherizer windows.
                 if (settings.AutoLoad)
