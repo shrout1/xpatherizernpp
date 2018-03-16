@@ -126,7 +126,16 @@ namespace Kbg.NppPluginNET
                 curScintilla = PluginBase.GetCurrentScintilla();
                 int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                 StringBuilder sb = new StringBuilder(length);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+                //Construct Scintilla Gateway, pull text and append document text into sb object.
+                //This prevents the need for massive reconstruction
+                ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+                sb.Append(Scintilla.GetText(length));
+                
+                //DEBUG ONLY
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+
 
                 int j = 0;
                 while (sb.ToString().Contains("<?xml-stylesheet"))
@@ -145,8 +154,17 @@ namespace Kbg.NppPluginNET
                 curScintilla = PluginBase.GetCurrentScintilla();
                 length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                 sb = new StringBuilder(length);
+                //Construct Scintilla Gateway, pull text and append document text into sb object.
+                //This prevents the need for massive reconstruction
+                //THIS MAY CAUSE PROBLEMS WITH THE APPEND... NOT SURE - Object might have been recreated here...
+                
+                //Assuming that SB is being recreated here, appending full document string in.
+                sb.Append(Scintilla.GetText(length));
 
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+                //DEBUG ONLY
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+
                 File.WriteAllText(tmpFilesPath + "xslt.xslt", sb.ToString());
 
                 File.WriteAllText(tmpFilesPath + "html.html", "<!DOCTYPE html><html><frameset cols=\"*\"><frame src=\"xml.xml\" /></frameset></html>");
@@ -282,9 +300,17 @@ namespace Kbg.NppPluginNET
             {
                 IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                 int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
-                StringBuilder sb = new StringBuilder(length);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
-                string doc = sb.ToString();
+
+                //Utilizing ScintillaGateway from updated infrastructure to pull text out of current Scintilla window
+                ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+                string doc;
+                doc = Scintilla.GetText(length);
+
+
+                //DEBUG ONLY
+                //StringBuilder sb = new StringBuilder(length); //May need to be preserved because of code below
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+                //string doc = sb.ToString();
 
                 if (settings.IgnoreDocType)
                     XMLdoc.XmlResolver = null;
@@ -300,7 +326,8 @@ namespace Kbg.NppPluginNET
                     XMLdec = (XmlDeclaration)XMLdoc.FirstChild;
                 }
 
-                sb = new StringBuilder();
+                //StringBuilder was added to the line below - DEBUG INFO
+                StringBuilder sb = new StringBuilder();
                 XmlWriterSettings xwsettings = new XmlWriterSettings();
                 xwsettings.Indent = settings.Indent;
                 xwsettings.IndentChars = "";
@@ -483,7 +510,15 @@ namespace Kbg.NppPluginNET
                         IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                         int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                         StringBuilder sb = new StringBuilder(length);
-                        Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+                        //Construct Scintilla Gateway, pull text and append document text into sb object.
+                        //This prevents the need for massive reconstruction
+                        ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+                        sb.Append(Scintilla.GetText(length));
+
+                        //DEBUG ONLY
+                        //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
                         string fromfile = br.ReadString();
 
                         if (fromfile != sb.ToString())
@@ -522,7 +557,14 @@ namespace Kbg.NppPluginNET
                 IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                 int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                 StringBuilder sb = new StringBuilder(length);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+                
+                //DEBUG ONLY
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+                //Construct Scintilla Gateway, pull text and append document text into sb object.
+                //This prevents the need for massive reconstruction
+                ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+                sb.Append(Scintilla.GetText(length));
 
                 Stream file = saveFileDialog1.OpenFile();
                 BinaryWriter bw = new BinaryWriter(file);
@@ -577,9 +619,12 @@ namespace Kbg.NppPluginNET
             try
             {
                 int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
-                StringBuilder sb = new StringBuilder(length);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
-                string doc = sb.ToString();
+
+                
+                //Utilizing ScintillaGateway from updated infrastructure to pull text out of current Scintilla window
+                ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+                string doc;
+                doc = Scintilla.GetText(length);
 
                 if (settings.IgnoreDocType)
                     XMLdoc.XmlResolver = null;
@@ -897,9 +942,16 @@ namespace Kbg.NppPluginNET
 
                 IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                 int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
-                StringBuilder sb = new StringBuilder(length);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
-                string doc = sb.ToString();
+
+                //Utilizing ScintillaGateway from updated infrastructure to pull text out of current Scintilla window
+                ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+                string doc;
+                doc = Scintilla.GetText(length);
+
+                //DEBUG ONLY - old method of reading in doc string
+                //StringBuilder sb = new StringBuilder(length);
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+                //string doc = sb.ToString();
 
                 MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(doc.Replace("&", "&amp;")));
                 XmlTextReader xtr = new XmlTextReader(ms);
@@ -1065,13 +1117,23 @@ namespace Kbg.NppPluginNET
         {
             IntPtr curScintilla = PluginBase.GetCurrentScintilla();
             int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
-            StringBuilder sb = new StringBuilder(length);
-            Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+            //Utilizing ScintillaGateway from updated infrastructure to pull text out of current Scintilla window
+            ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+            string doc;
+            doc = Scintilla.GetText(length);
+            
+            //Debug only
+            //StringBuilder sb = new StringBuilder(length);
+            //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
 
             XmlDocument XMLdoc = new XmlDocument();
             if (settings.IgnoreDocType)
                 XMLdoc.XmlResolver = null;
-            XMLdoc.LoadXml(sb.ToString());
+            XMLdoc.LoadXml(doc);
+
+            //Deprecated - DEBUG ONLY
+            //XMLdoc.LoadXml(sb.ToString());
             XmlNamespaceManager xnm = new XmlNamespaceManager(XMLdoc.NameTable);
             DNSCount = 1;
             xnm = GetNameSpaces(XMLdoc.SelectSingleNode("/*"), xnm);
@@ -1124,13 +1186,22 @@ namespace Kbg.NppPluginNET
         {
             IntPtr curScintilla = PluginBase.GetCurrentScintilla();
             int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
-            StringBuilder sb = new StringBuilder(length);
-            Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
+
+            //Utilizing ScintillaGateway from updated infrastructure to pull text out of current Scintilla window
+            ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
+            string doc;
+            doc = Scintilla.GetText(length);
+
+            //DEBUG ONLY
+            //StringBuilder sb = new StringBuilder(length);
+            //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
 
             XmlDocument XMLdoc = new XmlDocument();
             if (settings.IgnoreDocType)
                 XMLdoc.XmlResolver = null;
-            XMLdoc.LoadXml(sb.ToString());
+            XMLdoc.LoadXml(doc);
+            //DEBUG ONLY
+            //XMLdoc.LoadXml(sb.ToString());
 
             XmlNamespaceManager xnm = new XmlNamespaceManager(XMLdoc.NameTable);
             DNSCount = 1;

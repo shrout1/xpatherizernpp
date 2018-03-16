@@ -52,13 +52,13 @@
             this.panel2.Location = new System.Drawing.Point(0, 21);
             this.panel2.MinimumSize = new System.Drawing.Size(100, 20);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(116, 21);
+            this.panel2.Size = new System.Drawing.Size(120, 21);
             this.panel2.TabIndex = 6;
             // 
             // btnHideAll
             // 
             this.btnHideAll.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnHideAll.Location = new System.Drawing.Point(65, 0);
+            this.btnHideAll.Location = new System.Drawing.Point(69, 0);
             this.btnHideAll.Name = "btnHideAll";
             this.btnHideAll.Size = new System.Drawing.Size(51, 21);
             this.btnHideAll.TabIndex = 1;
@@ -85,7 +85,7 @@
             this.resultsTree.Location = new System.Drawing.Point(0, 42);
             this.resultsTree.MinimumSize = new System.Drawing.Size(100, 4);
             this.resultsTree.Name = "resultsTree";
-            this.resultsTree.Size = new System.Drawing.Size(116, 220);
+            this.resultsTree.Size = new System.Drawing.Size(120, 220);
             this.resultsTree.TabIndex = 8;
             this.resultsTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.resultsTree_BeforeSelect);
             this.resultsTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.resultsTree_AfterSelect);
@@ -120,7 +120,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.MinimumSize = new System.Drawing.Size(0, 21);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(116, 21);
+            this.panel1.Size = new System.Drawing.Size(120, 21);
             this.panel1.TabIndex = 7;
             // 
             // btnStop
@@ -128,7 +128,7 @@
             this.btnStop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnStop.Location = new System.Drawing.Point(0, 0);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(116, 21);
+            this.btnStop.Size = new System.Drawing.Size(120, 21);
             this.btnStop.TabIndex = 0;
             this.btnStop.Text = "Cancel";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(116, 262);
+            this.ClientSize = new System.Drawing.Size(120, 262);
             this.Controls.Add(this.resultsTree);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);

@@ -5,7 +5,7 @@ using System.Text;
 namespace Kbg.NppPluginNET.PluginInfrastructure
 {
     /// <summary>
-    /// This it the plugin-writers primary interface to Notepad++/Scintilla.
+    /// This is the plugin-writers primary interface to Notepad++/Scintilla.
     /// It takes away all the complexity with command numbers and Int-pointer casting.
     ///
     /// See http://www.scintilla.org/ScintillaDoc.html for further details.
