@@ -40,11 +40,12 @@ namespace Kbg.NppPluginNET
 
         #region " StartUp/CleanUp "
 
-        public static void OnNotification(ScNotification notification)
-        {
-            //Borrowed from GUIDHelper
-            //selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
-        }
+//        public static void OnNotification(ScNotification notification)
+//        {
+//            //Borrowed from GUIDHelper
+//            //selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
+//        }
+
         internal static void CommandMenuInit()
         {
             //Debug
@@ -266,7 +267,7 @@ namespace Kbg.NppPluginNET
         /// </summary>
         internal static void XPathHelp()
         {
-            System.Diagnostics.Process.Start("http://www.w3schools.com/xpath/default.asp");
+            System.Diagnostics.Process.Start("https://www.w3schools.com/xml/xpath_intro.asp");
         }
 
         /// <summary>
@@ -405,9 +406,9 @@ namespace Kbg.NppPluginNET
         {
             if (ShowSearch)
             {
-                
+                //Attempting to load through messaging system
                 //Appears that forms were being initialized in a different way for older versions of NPP
-                InitializeForms();
+                //InitializeForms();
                 // {
                     if (!frmXPathSearch.HasBeenShown)
                     {
@@ -430,9 +431,12 @@ namespace Kbg.NppPluginNET
 
             if (ShowResults)
             {
-               // if (!(frmXPathSearch == null))
-               // {
-                    if (!frmXPathResults.HasBeenShown)
+                //Can results be shown separately from search box??
+                //Appears that forms were being initialized in a different way for older versions of NPP
+                //InitializeForms();
+                // if (!(frmXPathSearch == null))
+                // {
+                if (!frmXPathResults.HasBeenShown)
                     {
                         NppTbData _nppTbData = new NppTbData();
                         _nppTbData.hClient = frmXPathResults.Handle;
@@ -964,20 +968,22 @@ namespace Kbg.NppPluginNET
             }
         }
 
+        //This listener appears to be deprecated. Duplicating this code into BeNotified
         /// <summary>
         /// Listener for notifications from NPP.
         /// </summary>
         /// <param name="code">The parameter sent from NPP.</param>
-        public static void Notifications(IntPtr code)
+        public static void OnNotification(ScNotification nc)
         {
-            ScNotification nc = (ScNotification)Marshal.PtrToStructure(code, typeof(ScNotification));
+            //This conversion may be duplicate from the 'beNotified' function in the UnmanagedExports.cs callback.
+            //ScNotification nc = (ScNotification)Marshal.PtrToStructure(notifyCode, typeof(ScNotification));
             if (nc.Header.Code == (uint)NppMsg.NPPN_READY)
             {
                 //NPP is done loading.
 
                 //COMMENTED OUT FOR DEBUG - not sure how this is being invoked anymore.
                 //Create the XPatherizer windows and load the data file.
-                //InitializeForms();
+                InitializeForms();
 
                 //Show the XPatherizer windows.
                 if (settings.AutoLoad)
