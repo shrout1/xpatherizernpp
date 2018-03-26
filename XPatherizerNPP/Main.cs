@@ -40,16 +40,9 @@ namespace Kbg.NppPluginNET
 
         #region " StartUp/CleanUp "
 
-//        public static void OnNotification(ScNotification notification)
-//        {
-//            //Borrowed from GUIDHelper
-//            //selectWholeGuidIfStartOrEndIsSelected.Execute(notification);
-//        }
-
         internal static void CommandMenuInit()
         {
-            //Debug
-            //System.Diagnostics.Debugger.Launch();
+            
             StringBuilder sbFilePath = new StringBuilder(Win32.MAX_PATH);
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_GETPLUGINSCONFIGDIR, Win32.MAX_PATH, sbFilePath);
             settingsFilePath = sbFilePath.ToString() + "\\XPatherizer";
@@ -131,11 +124,6 @@ namespace Kbg.NppPluginNET
                 //This prevents the need for massive reconstruction
                 ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
                 sb.Append(Scintilla.GetText(length));
-                
-                //DEBUG ONLY
-                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
-
-
 
                 int j = 0;
                 while (sb.ToString().Contains("<?xml-stylesheet"))
@@ -156,14 +144,7 @@ namespace Kbg.NppPluginNET
                 sb = new StringBuilder(length);
                 //Construct Scintilla Gateway, pull text and append document text into sb object.
                 //This prevents the need for massive reconstruction
-                //THIS MAY CAUSE PROBLEMS WITH THE APPEND... NOT SURE - Object might have been recreated here...
-                
-                //Assuming that SB is being recreated here, appending full document string in.
                 sb.Append(Scintilla.GetText(length));
-
-                //DEBUG ONLY
-                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
-
 
                 File.WriteAllText(tmpFilesPath + "xslt.xslt", sb.ToString());
 
@@ -357,10 +338,18 @@ namespace Kbg.NppPluginNET
                     }
                 }
 
-                Win32.SendMessage(curScintilla, SciMsg.SCI_SETSELECTIONSTART, 0, 0);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_SETSELECTIONEND, length, 0);
-                Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, sb.Replace("&amp;", "&"));
-                Win32.SendMessage(curScintilla, SciMsg.SCI_GOTOPOS, 0, 0);
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_SETSELECTIONSTART, 0, 0);
+                ////Win32.SendMessage(curScintilla, SciMsg.SCI_SETSELECTIONEND, length, 0);
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_REPLACESEL, 0, sb.Replace("&amp;", "&"));
+                //Win32.SendMessage(curScintilla, SciMsg.SCI_GOTOPOS, 0, 0);
+
+                Position pos_start = new Position(0);
+                Position pos_end = new Position(length);
+                Scintilla.SetSelectionStart(pos_start);
+                Scintilla.SetSelectionEnd(pos_end);
+                Scintilla.ReplaceSel(sb.Replace("&amp;", "&").ToString());
+                Scintilla.GotoPos(pos_start);
+
                 Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_MENUCOMMAND, 0, NppMenuCmd.IDM_LANG_XML);
             }
             catch (XmlException xex)
@@ -516,9 +505,6 @@ namespace Kbg.NppPluginNET
                         ScintillaGateway Scintilla = new ScintillaGateway(curScintilla);
                         sb.Append(Scintilla.GetText(length));
 
-                        //DEBUG ONLY
-                        //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
-
                         string fromfile = br.ReadString();
 
                         if (fromfile != sb.ToString())
@@ -557,9 +543,6 @@ namespace Kbg.NppPluginNET
                 IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                 int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                 StringBuilder sb = new StringBuilder(length);
-                
-                //DEBUG ONLY
-                //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
 
                 //Construct Scintilla Gateway, pull text and append document text into sb object.
                 //This prevents the need for massive reconstruction
@@ -1033,7 +1016,6 @@ namespace Kbg.NppPluginNET
             {
                 //NPP is done loading.
 
-                //COMMENTED OUT FOR DEBUG - not sure how this is being invoked anymore.
                 //Create the XPatherizer windows and load the data file.
                 InitializeForms();
 

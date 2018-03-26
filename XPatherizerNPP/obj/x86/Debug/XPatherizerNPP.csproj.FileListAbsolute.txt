@@ -11,3 +11,5 @@ C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\bin\x86\Debug\XP
 C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Debug\XPatherizerNPP.dll
 C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Debug\XPatherizerNPP.pdb
 C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Debug\XPatherizerNPP.csprojResolveAssemblyReference.cache
+C:\Program Files (x86)\Notepad++\plugins\XPatherizerNPP.dll
+C:\Program Files (x86)\Notepad++\plugins\XPatherizerNPP.pdb

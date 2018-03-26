@@ -206,9 +206,6 @@ namespace Kbg.NppPluginNET
                     IntPtr curScintilla = PluginBase.GetCurrentScintilla();
                     int length = (int)Win32.SendMessage(curScintilla, SciMsg.SCI_GETLENGTH, 0, 0) + 1;
                     StringBuilder sb = new StringBuilder(length);
-
-                    //DEBUG ONLY
-                    //Win32.SendMessage(curScintilla, SciMsg.SCI_GETTEXT, length, sb);
                     
                     //Construct Scintilla Gateway, pull text and append document text into sb object.
                     //This prevents the need for massive reconstruction

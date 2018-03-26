@@ -10,3 +10,6 @@ C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x64\Debug\Kb
 C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x64\Debug\Kbg.NppPluginNET.XPatherizerSettingsForm.resources
 C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x64\Debug\Kbg.NppPluginNET.XPathResultsForm.resources
 C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x64\Debug\Kbg.NppPluginNET.XPathSearchForm.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x64\Debug\XPatherizerNPP.csprojResolveAssemblyReference.cache
+C:\Program Files\Notepad++\plugins\XPatherizerNPP.dll
+C:\Program Files\Notepad++\plugins\XPatherizerNPP.pdb
