@@ -1,5 +1,7 @@
 xpatherizernpp
 
+32 Bit Only
+
 XML XPath Query Analyzer Plugin for NotePad ++
 
 Analyze multiple XPath queries with reverse lookup in NotePad++.
