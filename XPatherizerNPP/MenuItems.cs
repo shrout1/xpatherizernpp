@@ -27,9 +27,10 @@ namespace Kbg.NppPluginNET
             menuItems.Add(new MenuItem("VerifyAll", "Verify XML (all documents)", Main.VerifyAll));
             menuItems.Add(new MenuItem("", "---", null));
             menuItems.Add(new MenuItem("Transform", "Transform current document", Main.Transform));
-            menuItems.Add(new MenuItem("", "---", null));
-            menuItems.Add(new MenuItem("LoadXMPL", "Load XPML", Main.LoadXPML));
-            menuItems.Add(new MenuItem("SaveXMPL", "Save XPML", Main.SaveXPML));
+            //Disabled until functionality can be restored.
+            //menuItems.Add(new MenuItem("", "---", null));
+            //menuItems.Add(new MenuItem("LoadXMPL", "Load XPML", Main.LoadXPML));
+           // menuItems.Add(new MenuItem("SaveXMPL", "Save XPML", Main.SaveXPML));
             menuItems.Add(new MenuItem("", "---", null));
             menuItems.Add(new MenuItem("ShowAbout", "About", Main.ShowAbout));
             menuItems.Add(new MenuItem("XPathHelp", "XPath Help (W3 Schools)", Main.XPathHelp));

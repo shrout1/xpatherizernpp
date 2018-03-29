@@ -37,28 +37,31 @@
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(284, 172);
+            this.label1.Size = new System.Drawing.Size(426, 265);
             this.label1.TabIndex = 0;
-            this.label1.Text = "\r\nXPatherizer - NPP\r\n\r\nVersion 2.2\r\n\r\nVisit the Project Homepage";
+            this.label1.Text = "\r\nXPatherizer - NPP\r\n\r\nVersion 2.12\r\n Visit the Project Homepage";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // linkLabel1
             // 
-            this.linkLabel1.Location = new System.Drawing.Point(3, 90);
+            this.linkLabel1.Location = new System.Drawing.Point(4, 138);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(281, 35);
+            this.linkLabel1.Size = new System.Drawing.Size(422, 54);
             this.linkLabel1.TabIndex = 1;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "http://code.google.com/p/xpatherizernpp/";
+            this.linkLabel1.Text = "https://github.com/shrout1/xpatherizernpp";
             this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(103, 137);
+            this.button1.Location = new System.Drawing.Point(154, 211);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(112, 35);
             this.button1.TabIndex = 2;
             this.button1.Text = "OK";
             this.button1.UseVisualStyleBackColor = true;
@@ -66,13 +69,14 @@
             // 
             // XPatherizerAboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 172);
+            this.ClientSize = new System.Drawing.Size(426, 265);
             this.ControlBox = false;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "XPatherizerAboutForm";
