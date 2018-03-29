@@ -1,0 +1,11 @@
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\XPatherizerNPP.csprojResolveAssemblyReference.cache
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\Kbg.NppPluginNET.XMLFileSelect.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\Kbg.NppPluginNET.XPatherizerAboutForm.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\Kbg.NppPluginNET.XPatherizerSettingsForm.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\Kbg.NppPluginNET.XPathResultsForm.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\Kbg.NppPluginNET.XPathSearchForm.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\XPatherizerNPP.Properties.Resources.resources
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\XPatherizerNPP.csproj.GenerateResource.Cache
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\XPatherizerNPP.csproj.CoreCompileInputs.cache
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\bin\x86\Release\XPatherizerNPP.dll
+C:\Users\shrout\Documents\NPP_Dev\XPatherizerNPP\XPatherizerNPP\obj\x86\Release\XPatherizerNPP.dll

@@ -21,4 +21,8 @@
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files %28x86%29\Notepad++\notepad++.exe</StartProgram>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Program Files %28x86%29\Notepad++\notepad++.exe</StartProgram>
+  </PropertyGroup>
 </Project>

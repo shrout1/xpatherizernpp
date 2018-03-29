@@ -70,6 +70,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -177,7 +178,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.targets" />
+    <None Include="PluginInfrastructure\DllExport\NppPlugin.DllExport.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\XPNPPIcon16.png" />
   </ItemGroup>
   <ItemGroup>
